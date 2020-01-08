@@ -1,0 +1,100 @@
+; login macro of Tera Term
+;
+; File: ssh2login.ttl
+; Description: auto login with SSH2 protocol
+; Environment: generic
+; Update: 2020/01/08
+; Author: kahatato
+; 処理内容*******************************************
+; サーバ接続
+; サーバ確認
+; 実行日付確認
+; サーバのログディレクトリに移動
+; 作業ディレクトリ確認
+; teratarmログ取得
+; ***************************************************
+
+teralogdir = ''
+; オンラインログディレクトリ
+onlogdir = ''
+; バッチログディレクトリ
+btlogdir = ''
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; リストボックス定義
+strdim selectlist 2
+; リストボックスに表示する接続名
+selectlist[0] = ''
+selectlist[1] = ''
+
+listbox '接続する面を選択してください' '接続先の選択' selectlist 0
+; selectlist[0]が選択された場合
+if result=0 then
+
+    ;接続情報
+    ;
+    username = ''
+    hostname = ''
+    password = ''
+    slogdir = onlogdir
+
+; selectlist[1]が選択された場合
+elseif result=1 then
+
+    ;接続情報
+    ;
+    username = ''
+    hostname = ''
+    password = ''
+    slogdir = btlogdir    
+
+; 上記以外の場合
+else
+
+    ;終了する
+    end
+
+endif
+
+;ログイン
+login = hostname
+strconcat login ':22 /ssh /auth=password /user='
+strconcat login username
+strconcat login ' /passwd='
+strconcat login password
+connect login
+
+; passwordが入力されるまで待機
+wait password
+
+; ********************
+; 待機中の処理
+; ********************
+sendln 'id;uname -a;date'
+
+;ディレクトリ移動
+;オンライン・バッチの確認
+strmatch slogdir '^.+(online).+$'
+
+;バッチの場合
+if result == 0 then
+    sendln 'cd ' slogdir
+else
+;オンラインの場合
+    sendln 'cd ' #$27 slogdir #$27
+endif
+
+; ディレクトリ確認
+sendln 'pwd'
+
+; 接続先確認
+;sendln 'echo ' #$27 selectlist[result] 'に接続しました。' #$27 ' > /dev/null'
+
+; ログファイル定義
+logfile = teralogdir
+strconcat logfile username
+strconcat logfile '@'
+strconcat logfile hostname
+getdate datetime '-%Y%m%d-%H%M%S'
+strconcat logfile datetime
+strconcat logfile '.log'
+logopen logfile 0 0
