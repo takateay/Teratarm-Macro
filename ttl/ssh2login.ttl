@@ -5,57 +5,57 @@
 ; Environment: generic
 ; Update: 2020/01/08
 ; Author: kahatato
-; å‡¦ç†å†…å®¹*******************************************
-; ã‚µãƒ¼ãƒæ¥ç¶š
-; ã‚µãƒ¼ãƒç¢ºèª
-; å®Ÿè¡Œæ—¥ä»˜ç¢ºèª
-; ã‚µãƒ¼ãƒã®ãƒ­ã‚°ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ç§»å‹•
-; ä½œæ¥­ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªç¢ºèª
-; teratarmãƒ­ã‚°å–å¾—
+; ˆ—“à—e*******************************************
+; ƒT[ƒoÚ‘±
+; ƒT[ƒoŠm”F
+; Às“ú•tŠm”F
+; ƒT[ƒo‚ÌƒƒOƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®
+; ì‹ÆƒfƒBƒŒƒNƒgƒŠŠm”F
+; teratarmƒƒOæ“¾
 ; ***************************************************
 
 teralogdir = ''
-; ã‚ªãƒ³ãƒ©ã‚¤ãƒ³ãƒ­ã‚°ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+; ƒIƒ“ƒ‰ƒCƒ“ƒƒOƒfƒBƒŒƒNƒgƒŠ
 onlogdir = ''
-; ãƒãƒƒãƒãƒ­ã‚°ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+; ƒoƒbƒ`ƒƒOƒfƒBƒŒƒNƒgƒŠ
 btlogdir = ''
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; ãƒªã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹å®šç¾©
+; ƒŠƒXƒgƒ{ƒbƒNƒX’è‹`
 strdim selectlist 2
-; ãƒªã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã«è¡¨ç¤ºã™ã‚‹æ¥ç¶šå
+; ƒŠƒXƒgƒ{ƒbƒNƒX‚É•\¦‚·‚éÚ‘±–¼
 selectlist[0] = ''
 selectlist[1] = ''
 
-listbox 'æ¥ç¶šã™ã‚‹é¢ã‚’é¸æŠã—ã¦ãã ã•ã„' 'æ¥ç¶šå…ˆã®é¸æŠ' selectlist 0
-; selectlist[0]ãŒé¸æŠã•ã‚ŒãŸå ´åˆ
+listbox 'Ú‘±‚·‚é–Ê‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢' 'Ú‘±æ‚Ì‘I‘ğ' selectlist 0
+; selectlist[0]‚ª‘I‘ğ‚³‚ê‚½ê‡
 if result=0 then
 
-    ;æ¥ç¶šæƒ…å ±
+    ;Ú‘±î•ñ
     ;
     username = ''
     hostname = ''
     password = ''
     slogdir = onlogdir
 
-; selectlist[1]ãŒé¸æŠã•ã‚ŒãŸå ´åˆ
+; selectlist[1]‚ª‘I‘ğ‚³‚ê‚½ê‡
 elseif result=1 then
 
-    ;æ¥ç¶šæƒ…å ±
+    ;Ú‘±î•ñ
     ;
     username = ''
     hostname = ''
     password = ''
     slogdir = btlogdir    
 
-; ä¸Šè¨˜ä»¥å¤–ã®å ´åˆ
+; ã‹LˆÈŠO‚Ìê‡
 else
 
-    ;çµ‚äº†ã™ã‚‹
+    ;I—¹‚·‚é
     end
 
 endif
 
-;ãƒ­ã‚°ã‚¤ãƒ³
+;ƒƒOƒCƒ“
 login = hostname
 strconcat login ':22 /ssh /auth=password /user='
 strconcat login username
@@ -63,33 +63,33 @@ strconcat login ' /passwd='
 strconcat login password
 connect login
 
-; passwordãŒå…¥åŠ›ã•ã‚Œã‚‹ã¾ã§å¾…æ©Ÿ
+; password‚ª“ü—Í‚³‚ê‚é‚Ü‚Å‘Ò‹@
 wait password
 
 ; ********************
-; å¾…æ©Ÿä¸­ã®å‡¦ç†
+; ‘Ò‹@’†‚Ìˆ—
 ; ********************
 sendln 'id;uname -a;date'
 
-;ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªç§»å‹•
-;ã‚ªãƒ³ãƒ©ã‚¤ãƒ³ãƒ»ãƒãƒƒãƒã®ç¢ºèª
+;ƒfƒBƒŒƒNƒgƒŠˆÚ“®
+;ƒIƒ“ƒ‰ƒCƒ“Eƒoƒbƒ`‚ÌŠm”F
 strmatch slogdir '^.+(online).+$'
 
-;ãƒãƒƒãƒã®å ´åˆ
+;ƒoƒbƒ`‚Ìê‡
 if result == 0 then
     sendln 'cd ' slogdir
 else
-;ã‚ªãƒ³ãƒ©ã‚¤ãƒ³ã®å ´åˆ
+;ƒIƒ“ƒ‰ƒCƒ“‚Ìê‡
     sendln 'cd ' #$27 slogdir #$27
 endif
 
-; ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªç¢ºèª
+; ƒfƒBƒŒƒNƒgƒŠŠm”F
 sendln 'pwd'
 
-; æ¥ç¶šå…ˆç¢ºèª
-;sendln 'echo ' #$27 selectlist[result] 'ã«æ¥ç¶šã—ã¾ã—ãŸã€‚' #$27 ' > /dev/null'
+; Ú‘±æŠm”F
+;sendln 'echo ' #$27 selectlist[result] '‚ÉÚ‘±‚µ‚Ü‚µ‚½B' #$27 ' > /dev/null'
 
-; ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«å®šç¾©
+; ƒƒOƒtƒ@ƒCƒ‹’è‹`
 logfile = teralogdir
 strconcat logfile username
 strconcat logfile '@'
